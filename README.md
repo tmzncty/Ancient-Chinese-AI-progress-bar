@@ -32,12 +32,11 @@
 ## 2.1CV方面
 <font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CV，是计算机视觉的简称。在古文AI领域主要是OCR。</font>
 ### 2.1.1基础数据
-<font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;图文对应的数据，并且有</font>
+<font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
 ### 2.1.2硬件需求
 <font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
 ### 2.1.3目前困境
-<font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    多模态模型能够处理和理解多种类型的输入数据，例如文本、音频、图像等。在古文AI领域，这种模型可以结合文字的音义形等特点，进行更深层次的分析。
-</font>
+<font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
 ## 2.2NLP/NLU方面
 <font face="思源宋体" size=4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLP（Natural Language Processing）指的是使用计算机技术处理和分析人类语言的领域。它涵盖了一系列技术和方法，旨在使计算机能够理解、处理和生成人类语言。NLP的目标是建立能够与人类自然语言进行交互的智能系统，使计算机能够理解文本、语音和对话，并从中提取有意义的信息。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLU（Natural Language Understanding）是NLP的一个子领域，专注于理解和解释人类语言的含义。NLU的目标是使计算机能够更深入地理解文本或对话的含义和上下文，并从中获取更高层次的语义信息。</font>
 ### 2.2.1基础数据
