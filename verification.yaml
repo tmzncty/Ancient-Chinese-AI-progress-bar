@@ -1,0 +1,413 @@
+schema_version: 1
+updated: 2026-08-28
+
+# This file deliberately separates "a paper/repository says X" from
+# "X has been independently reproduced". Publication venue is not a
+# reproduction badge.
+
+verification_scale:
+  L0: "Mentioned or claimed; primary artifact not checked"
+  L1: "Primary source located and claim text verified"
+  L2: "Public artifacts inspected (code/data/model/eval as applicable)"
+  L3: "Independent reproduction located or a sustained external workflow observed"
+  L4: "Reproduced by this repository with recorded inputs, versions and outputs"
+
+access_values: [public, gated, partial, unavailable, unknown, not_applicable]
+reproduction_values: [not_attempted, blocked, partial, independent_report, reproduced_here, not_applicable]
+
+policy:
+  author_report_is_not_reproduction: true
+  venue_is_not_reproduction: true
+  public_code_does_not_imply_public_data: true
+  public_data_does_not_imply_reproducible_results: true
+  model_demo_does_not_imply_benchmark_validity: true
+  no_level_4_without_run_record: true
+  notes: >-
+    A result may be credible without being reproduced here. The point of this
+    ledger is not to accuse authors of fabrication; it is to state exactly
+    what this repository has and has not checked.
+
+sources:
+  evahan-2024-overview:
+    title: Overview of EvaHan2024 — Sentence Segmentation and Punctuation
+    primary: https://aclanthology.org/2024.lt4hala-1.27/
+    level: L1
+    paper: public
+    code: unknown
+    data: partial
+    model: not_applicable
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "ACL Anthology primary record exists"
+      - "Abstract reports closed-track best F1 88.47% segmentation and 75.29% punctuation"
+      - "Abstract reports roughly 1–2% original-character changes from LLM over-generation"
+    not_checked:
+      - "Re-running all 32 submitted systems"
+      - "Independent recomputation of leaderboard scores from raw submissions"
+
+  evahan-2025-overview:
+    title: Overview of EvaHan2025 — Ancient Chinese Named Entity Recognition
+    primary: https://aclanthology.org/2025.alp-1.19/
+    level: L1
+    paper: public
+    code: unknown
+    data: partial
+    model: not_applicable
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "ACL Anthology primary record exists"
+      - "Abstract reports 13 teams and 77 runs"
+      - "Abstract reports closed-track best F1 85.04%, 90.28%, 84.49% on TestA/B/C"
+    not_checked:
+      - "Re-running submitted systems"
+      - "Independent recomputation of leaderboard scores"
+
+  evahan-project:
+    title: EvaHan shared-task project
+    primary: https://github.com/GoThereGit/EvaHan
+    level: L2
+    paper: partial
+    code: public
+    data: partial
+    model: partial
+    evaluation: mixed
+    reproduction: not_attempted
+    checked:
+      - "Public project repository exists"
+      - "Project spans multiple annual Ancient Chinese shared tasks"
+      - "Repository currently contains annual archives/materials and 2026 evaluation scripts"
+    not_checked:
+      - "Every annual dataset license and completeness"
+      - "Every baseline result"
+
+  evahan-2026:
+    title: EvaHan 2026 multimodal OCR shared task
+    primary: https://github.com/GoThereGit/EvaHan
+    level: L2
+    paper: unknown
+    code: public
+    data: partial
+    model: partial
+    evaluation: benchmark_in_progress_or_reported
+    reproduction: not_attempted
+    checked:
+      - "Public shared-task materials exist"
+      - "Task design separates printed OCR, layout analysis and handwriting OCR"
+      - "Repository root contains dataset-description documents plus task_a_c_eva.py and task_b_eva.py evaluation scripts"
+    not_checked:
+      - "Final leaderboard results as a reproduced experiment"
+
+  aclue:
+    title: Ancient Chinese Language Understanding Evaluation (ACLUE)
+    primary: https://github.com/isen-zhang/ACLUE
+    level: L2
+    paper: public
+    code: public
+    data: public
+    model: not_applicable
+    evaluation: author_reported_and_third_party_integrated
+    reproduction: not_attempted
+    checked:
+      - "Public benchmark repository exists"
+      - "Repository root contains data/, script/ and src/ together with separate data licensing"
+      - "ACLUE task is also integrated in lm-evaluation-harness"
+      - "15-task framing is visible in public materials"
+    not_checked:
+      - "Original paper table values reproduced here"
+      - "Benchmark contamination in modern models"
+
+  chisiec:
+    title: CHisIEC — Chinese Historical Information Extraction Corpus
+    primary: https://aclanthology.org/2024.lrec-main.283/
+    level: L2
+    paper: public
+    code: public
+    data: public
+    model: not_applicable
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "Peer-reviewed paper states 14,194 entities and 8,609 relations"
+      - "Public GitHub repository currently contains both code/ and data/ directories"
+    not_checked:
+      - "Independent recount of every annotation"
+      - "Baseline reproduction"
+
+  mcs-bench:
+    title: MCS-Bench — Multimodal Chinese Classical Studies benchmark
+    primary: https://aclanthology.org/2025.acl-long.515/
+    artifacts: https://github.com/SCUT-DLVCLab/MCS-Bench
+    level: L2
+    paper: public
+    code: partial
+    data: gated
+    model: not_applicable
+    evaluation: author_reported
+    reproduction: blocked
+    checked:
+      - "ACL paper reports 7 subdomains, 45 tasks and evaluation of 37 MLLMs"
+      - "ACL paper reports best average score below 50"
+      - "Public repository root contains calculate_metrics.py and an institutional application form, not an unrestricted benchmark data directory"
+      - "Dataset access requires application, institutional signature/stamp and manual review"
+    not_checked:
+      - "Raw benchmark examples beyond public samples"
+      - "Independent rerun of 37-model table"
+    warning: >-
+      The paper's statement that data/code will be publicly available must not
+      be paraphrased as unrestricted public download. As checked in 2026-08,
+      dataset access is gated to approved research applicants.
+
+  chunqiutr:
+    title: ChunQiuTR — Time-Keyed Temporal Retrieval in Classical Chinese Annals
+    primary: https://aclanthology.org/2026.findings-acl.612/
+    artifacts: https://github.com/xbdxwyh/ChunQiuTR
+    level: L2
+    paper: public
+    code: public
+    data: public
+    model: partial
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "ACL Findings paper exists"
+      - "Repository root directly contains dataset/, src/, multiple evaluation scripts, main.py and requirements.txt"
+      - "Repository documents release of derived benchmark artifacts"
+      - "Repository documents source revision IDs and scripts for re-downloading Wikisource text"
+    not_checked:
+      - "Training CTD and reproducing reported gains"
+      - "Source-text reconstruction from every recorded revision"
+
+  ancientdoc:
+    title: AncientDoc — Chinese Ancient Documents benchmark
+    primary: https://aclanthology.org/2026.findings-acl.1438/
+    artifacts: https://github.com/bytedance/AncientDoc
+    level: L2
+    paper: public
+    code: unavailable
+    data: public
+    model: unavailable
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "ACL Findings paper exists"
+      - "Paper/README state five tasks, 14 document types, 100+ books and about 3,000 pages"
+      - "Repository is currently a project-page repository (README, HTML/CSS/JS/assets), not a visible experiment-code tree"
+      - "README links the dataset to Hugging Face and states CC0 licensing"
+      - "README's Models badge still points to literal placeholder 'link_to_models'; the 'Weights & Logs' link points to the arXiv paper rather than released weights/logs"
+    not_checked:
+      - "Baseline model reruns"
+      - "Independent verification of every dataset count"
+      - "LLM-as-judge/human-correlation experiments"
+      - "Whether complete evaluation/training code is published in a separate repository not linked from the inspected project repository"
+    warning: >-
+      Artifact presence must be described literally. The inspected AncientDoc
+      GitHub repository exposes a project site and dataset link, but no visible
+      benchmark execution code or released baseline weights/logs were confirmed
+      there during the 2026-08 audit.
+
+  guwenbert:
+    title: GuwenBERT
+    primary: https://github.com/Ethan-yt/guwenbert
+    level: L2
+    paper: unavailable
+    code: unavailable
+    data: partial
+    model: public
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "Public project repository exists and README links downloadable model weights"
+      - "Repository root currently contains README/LICENSE/assets but no visible training or evaluation code tree"
+      - "README reports 15,694 books / 1.7B characters for continued pretraining"
+      - "README explicitly warns experimental results are dataset/hyperparameter specific"
+    not_checked:
+      - "Training-corpus reconstruction"
+      - "Reported 6.3% NER improvement"
+      - "Competition placement from primary leaderboard records"
+    warning: >-
+      Public weights are not the same thing as public training/evaluation code.
+      The 2026-08 audit therefore records model availability separately from code.
+
+  wenyangpt:
+    title: WenyanGPT / WenyanBENCH
+    primary: https://www.ijcai.org/proceedings/2025/927
+    artifacts: https://huggingface.co/Wenyanmuc/WenyanGPT
+    level: L2
+    paper: public
+    code: unknown
+    data: partial
+    model: public
+    evaluation: author_reported
+    reproduction: not_attempted
+    checked:
+      - "IJCAI paper exists"
+      - "Public 8B model weights exist on Hugging Face"
+      - "A public Wenyanmuc/WenyanGPT dataset repository exists"
+    not_checked:
+      - "Exact mapping from public dataset files to every training/benchmark split described in paper"
+      - "Reported superiority over comparison models"
+      - "Complete training pipeline reproduction"
+    warning: >-
+      'We make data publicly available' and 'the complete published experiment
+      is reproducible from one command' are different claims. This repository
+      currently confirms artifact presence, not experiment reproduction.
+
+  xunzi:
+    title: XunziALLM
+    primary: https://github.com/Xunzi-LLM-of-Chinese-classics/XunziALLM
+    level: L2
+    paper: partial
+    code: partial
+    data: partial
+    model: public
+    evaluation: anecdotal_or_author_reported
+    reproduction: not_attempted
+    checked:
+      - "Public repository lists multiple released model families"
+      - "Repository currently contains examples/, requirements.txt, a download helper, web code, tutorials and sample data"
+      - "Project site and repository describe Ancient-Chinese processing capabilities"
+    not_checked:
+      - "A single comprehensive public benchmark supporting all capability claims"
+      - "Full training data and exact training process for all released variants"
+    warning: >-
+      Capability prose in a project README is product/project description, not
+      by itself a benchmark result. Public inference/example code and sample data
+      also do not imply that full training code/data are available.
+
+  ud-kanbun:
+    title: UD-Kanbun
+    primary: https://github.com/KoichiYasuoka/UD-Kanbun
+    level: L2
+    paper: partial
+    code: public
+    data: partial
+    model: public
+    evaluation: tool_available
+    reproduction: not_attempted
+    checked:
+      - "Public source repository contains setup.py, package source, notebook and documented usage"
+      - "Tokenizer/POS/dependency parsing pipeline is concretely specified"
+    not_checked:
+      - "Cross-genre accuracy benchmark in this repository"
+
+  ctext-library:
+    title: Chinese Text Project digital-library workflow
+    primary: https://doi.org/10.1093/llc/fqz046
+    level: L3
+    paper: public
+    code: partial
+    data: public
+    model: not_applicable
+    evaluation: sustained_real_workflow
+    reproduction: independent_report
+    checked:
+      - "A long-running public digital library is directly observable"
+      - "Project documentation emphasizes scan/text linking and provenance-aware correction"
+    not_checked:
+      - "Rebuilding the complete platform"
+
+  ctext-current:
+    title: Chinese Text Project current public workflow
+    primary: https://ctext.org/
+    level: L3
+    paper: public
+    code: partial
+    data: public
+    model: not_applicable
+    evaluation: sustained_real_workflow
+    reproduction: independent_report
+    checked:
+      - "Current public service is observable"
+    not_checked:
+      - "Internal production pipeline"
+
+  ctext-parallels:
+    title: Chinese Text Project text-reuse / parallel passage work
+    primary: https://doi.org/10.1093/llc/fqx024
+    level: L1
+    paper: public
+    code: unknown
+    data: partial
+    model: not_applicable
+    evaluation: author_reported_and_live_feature
+    reproduction: not_attempted
+    checked:
+      - "Peer-reviewed publication exists"
+    not_checked:
+      - "Original experiment reproduction"
+
+claims:
+  evahan2024_closed_best_segmentation_f1:
+    source: evahan-2024-overview
+    value: 88.47
+    unit: percent_f1
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  evahan2024_closed_best_punctuation_f1:
+    source: evahan-2024-overview
+    value: 75.29
+    unit: percent_f1
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  evahan2024_llm_character_change_rate:
+    source: evahan-2024-overview
+    value: "about 1–2%"
+    unit: author_described_rate
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  evahan2025_test_a_best_f1:
+    source: evahan-2025-overview
+    value: 85.04
+    unit: percent_f1
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  evahan2025_test_b_best_f1:
+    source: evahan-2025-overview
+    value: 90.28
+    unit: percent_f1
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  evahan2025_test_c_best_f1:
+    source: evahan-2025-overview
+    value: 84.49
+    unit: percent_f1
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  mcs_bench_37_models:
+    source: mcs-bench
+    value: 37
+    unit: models_evaluated
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  mcs_bench_45_tasks:
+    source: mcs-bench
+    value: 45
+    unit: tasks
+    status: primary_source_report_verified
+    reproduced_here: false
+
+  mcs_bench_best_average_below_50:
+    source: mcs-bench
+    value: "<50"
+    unit: benchmark_average_score
+    status: primary_source_report_verified_but_dataset_gated
+    reproduced_here: false
+
+  ancientdoc_scope:
+    source: ancientdoc
+    value: "5 tasks; 14 document types; 100+ books; about 3,000 pages"
+    unit: dataset_scope
+    status: primary_source_scope_report_verified_artifact_code_not_confirmed
+    reproduced_here: false
+
+# L4 entries must point to a committed experiment run under experiments/runs/.
+reproduced_here: []
