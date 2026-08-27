@@ -68,6 +68,7 @@
 - 放了评测脚本，没有 benchmark 数据；
 - 放了模型权重，没有训练语料；
 - 放了数据，没有论文中所用的清洗/划分脚本；
+- 放了一个“项目主页仓库”，真正实验代码根本不在里面；
 - 放了全部文件，但版本和论文跑表时已经不一致。
 
 因此“GitHub 图标亮着”只够证明 GitHub 图标亮着。
@@ -107,12 +108,14 @@
 
 但是截至本轮核查，benchmark 数据并不是匿名用户直接下载：项目要求下载申请表，由高校/科研机构人员签字（并建议盖章），提交相关近期论文，经人工审核后获得下载方式。
 
+更直接地看它当前 GitHub 根目录：能看到申请表、README、`calculate_metrics.py` 和展示图片；看不到一个可直接 clone 下来的完整 benchmark 数据目录。
+
 所以我们可以说：
 
 - ✅ 论文存在；
 - ✅ 公开仓库存在；
-- ✅ 评测代码存在；
-- ⚠️ 数据是 **gated**；
+- ◐ 有指标计算代码；
+- 🔒 数据是 **gated**；
 - ❌ 本仓库没有重跑 37 个模型；
 - ❌ 因而 `<50` 仍是**作者报告值**。
 
@@ -120,11 +123,29 @@
 
 ### ChunQiuTR：**物料透明度较好，但我们仍未复现结果**
 
-项目仓库可见训练与评测脚本，并说明发布派生 benchmark artifacts、时间键、qrels、索引等；对原始 Wikisource 文本还记录 revision `oldid`，并提供重新下载的方法。
+它不是只有 README。当前根目录能直接看到 `dataset/`、`src/`、`evaluate.py`、`main.py`、若干检索评测脚本和 `requirements.txt`；项目还说明发布派生 benchmark artifacts、时间键、qrels、索引等。对原始 Wikisource 文本记录 revision `oldid`，并提供重新下载的方法。
 
 这是很好的 provenance 习惯。
 
 但本仓库仍然只给 L2，因为我们没有真正训练 CTD、跑完整检索并复算论文表格。
+
+### AncientDoc：**有论文、有数据链接，不等于“代码已经公开”**
+
+这一项是本轮审计里很有教育意义的自我纠错。
+
+最初看到 ACL 论文、GitHub 仓库和 README 的 “Dataset / Models” 徽章时，我们一度把它记成 `code: public`。继续直接检查仓库后发现：当前仓库本质上是一个项目主页，根目录主要是 README、HTML/CSS/JS 和 assets；并没有看到训练/评测代码树。
+
+README 的 Dataset 确实链接到 Hugging Face，并声明 CC0；但同一页上的 Models 按钮还是字面量 `link_to_models` 占位符，“Weights & Logs” 又指回 arXiv 论文。
+
+所以现在改成：
+
+- ✅ 正式论文；
+- ✅ 数据链接可见；
+- ⚠️ 完整实验代码：**未在已检查仓库确认**；
+- ⚠️ baseline weights/logs：**未由当前链接确认**；
+- ❌ baseline 表格没有在本站重跑。
+
+注意，这也不是说“作者一定没在别处放代码”。我们只能说：**我们检查到的这个项目仓库里没有确认到。**
 
 ### WenyanGPT：**模型和数据确实能找到，不等于论文比较表已验证**
 
@@ -140,21 +161,31 @@ IJCAI 论文存在；Hugging Face 上可以找到 `Wenyanmuc/WenyanGPT` 模型�
 
 本仓库现在都没有亲自证明，所以结果仍标 `author_reported`。
 
-### XunziALLM：**模型存在，README 能力描述不自动升级成 benchmark**
+### XunziALLM：**有可运行代码，不等于训练过程完全开放**
 
-公开仓库确实列出了多代模型，也有项目网站和可调用接口。
+直接检查仓库可以看到 examples、requirements、模型下载脚本、web、教程和 sample data，模型也确实有公开发布。
 
-但“阅读理解很好”“高质量翻译”“精准识别”等产品/项目描述，与一个公开、版本锁定、可独立复算的 benchmark 是两类证据。
+因此把它说成“只有 README”也不公平。
 
-因此我们会收录它是**真实存在的古籍领域模型项目**，但不会拿 README 形容词直接给能力条加一格。
+但这些主要证明的是：**模型项目存在，而且公开了相当一部分使用侧物料。** 它们并不会自动回答完整训练数据、训练流程、所有版本的 benchmark 可复现性等问题。
 
-### GuwenBERT：**值得肯定的一点是它自己就在 README 里提醒你别过度解读**
+所以当前写成 `code: partial / data: partial / model: public` 更准确。
 
-GuwenBERT 的仓库、模型权重、训练说明都真实可见；README 也报告了训练语料规模和 NER 提升。
+### GuwenBERT：**公开权重与公开训练代码仍然是两回事**
 
-同时它明确声明：实验结果只代表特定数据集与超参数组合，可能受随机种子和设备影响，不应当当成模型本质结论。
+GuwenBERT 的 README、训练说明和模型权重链接都真实可见；README 也报告了训练语料规模和 NER 提升，并主动提醒实验结果受数据、超参数、随机种子和设备影响。
 
-这反而正是本仓库想要的态度。
+但继续检查 GitHub 根目录后，它目前主要是 README / LICENSE / assets，没有看到训练或评测代码树。因此审计状态从先前过于宽松的 `code: public` 改成 `code: unavailable`（意为：**在当前检查到的项目物料中未见公开代码**，不是证明代码世界上不存在）。
+
+这正是验证账本要允许“往回改格子”的原因。
+
+### ACLUE / CHisIEC / UD-Kanbun：**公开物料确实比一句 README 更实在**
+
+- ACLUE 根目录直接有 `data/`、`script/`、`src/`，还单列数据许可；
+- CHisIEC 根目录直接有 `code/` 与 `data/`；
+- UD-Kanbun 有 `setup.py`、包源码、notebook 和可安装工具链。
+
+但这里也仍然只到 L2：**文件存在**不等于**论文结果已经被我们重算**。
 
 ---
 
@@ -198,21 +229,21 @@ GuwenBERT 的仓库、模型权重、训练说明都真实可见；README 也报
 
 ---
 
-## 6. 我们真正想积累的不是“相信/不相信”
-
-而是这种表：
+## 6. 当前审计快照
 
 | 项目 | 论文 | 代码 | 数据 | 权重 | 独立复现 | 本仓库复现 |
 |---|---|---|---|---|---|---|
 | EvaHan2024 | ✅ | ? | ◐ | N/A | ? | ❌ |
 | EvaHan2025 | ✅ | ? | ◐ | N/A | ? | ❌ |
-| MCS-Bench | ✅ | ◐ | 🔒 | N/A | ? | ❌ |
+| EvaHan2026 | ? / task docs | ✅ 评测脚本 | ◐ | ◐ | ? | ❌ |
+| MCS-Bench | ✅ | ◐ 指标脚本 | 🔒 | N/A | ? | ❌ |
 | ChunQiuTR | ✅ | ✅ | ✅* | ◐ | ? | ❌ |
-| AncientDoc | ✅ | ✅ | ✅ | N/A | ? | ❌ |
+| AncientDoc | ✅ | ✕ 未在项目仓确认 | ✅ dataset link | ✕ 当前模型链接未确认 | ? | ❌ |
 | ACLUE | ✅ | ✅ | ✅ | N/A | 第三方 harness 集成 | ❌ |
-| GuwenBERT | 非正式/项目 | ✅ | ◐ | ✅ | ? | ❌ |
+| CHisIEC | ✅ | ✅ | ✅ | N/A | ? | ❌ |
+| GuwenBERT | 非正式/项目 | ✕ 未在项目仓确认 | ◐ | ✅ | ? | ❌ |
 | WenyanGPT | ✅ | ? | ◐ | ✅ | ? | ❌ |
-| XunziALLM | ◐ | ✅ | ? | ✅ | ? | ❌ |
+| XunziALLM | ◐ | ◐ | ◐ | ✅ | ? | ❌ |
 | UD-Kanbun | ◐ | ✅ | ◐ | ✅/随工具 | 长期可用工具 | ❌ |
 
 `*` ChunQiuTR 对原始 Wikisource 文本采用“派生物公开 + 记录 revision + 脚本重新下载”的方式，而不是简单把全部原始材料重新打包。
