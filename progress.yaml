@@ -31,8 +31,7 @@ capabilities:
       Current multimodal/OCR systems can identify common page elements, while
       unusual layouts, interlinear notes, damage, and page-specific structures
       still require review.
-    evidence:
-      - evahan-2026
+    evidence: [evahan-2026]
 
   - id: printed-ocr
     domain: digitization
@@ -43,9 +42,7 @@ capabilities:
       Practical for first-pass transcription on bounded collections, but rare
       characters, variant forms, stains, missing glyphs, and reading order
       remain material error sources.
-    evidence:
-      - evahan-2026
-      - mcs-bench
+    evidence: [evahan-2026, mcs-bench, ctext-library]
 
   - id: handwritten-ocr
     domain: digitization
@@ -56,19 +53,18 @@ capabilities:
       Dedicated evaluation now exists, but cursive connections, omissions,
       corrections, and individual handwriting create a much harder problem
       than printed text.
-    evidence:
-      - evahan-2026
+    evidence: [evahan-2026]
 
   - id: glyph-normalization
     domain: digitization
     name_zh: 异体字与字形归一
     level: 2
-    confidence: low
+    confidence: medium
     rationale: >-
       Candidate normalization is useful, but faithful transcription and
-      editorial normalization must remain separate operations.
-    evidence:
-      - evahan-2026
+      editorial normalization must remain separate operations. CText also
+      demonstrates dedicated handling for rare and non-Unicode glyphs.
+    evidence: [ctext-library]
 
   - id: word-segmentation-pos
     domain: text-structure
@@ -78,8 +74,7 @@ capabilities:
     rationale: >-
       Long-running research and shared evaluation make this a usable component,
       though word boundaries in Classical Chinese are partly analytical.
-    evidence:
-      - evahan-project
+    evidence: [evahan-project]
 
   - id: punctuation
     domain: text-structure
@@ -90,8 +85,7 @@ capabilities:
       EvaHan 2024 reports strong results, but unseen text is harder and LLM
       systems may modify original characters, so post-processing and review
       remain necessary.
-    evidence:
-      - evahan-2024-overview
+    evidence: [evahan-2024-overview]
 
   - id: ner
     domain: text-structure
@@ -101,10 +95,7 @@ capabilities:
     rationale: >-
       EvaHan 2025 provides a rigorous multi-domain benchmark with strong F1
       scores, while genre and entity type still materially affect performance.
-    evidence:
-      - evahan-2025-overview
-      - chisiec
-      - guwenbert
+    evidence: [evahan-2025-overview, chisiec, guwenbert]
 
   - id: relation-extraction
     domain: text-structure
@@ -114,8 +105,7 @@ capabilities:
     rationale: >-
       Specialized historical corpora and experiments exist, but implicit
       relations, schema dependence, and cross-text ambiguity remain difficult.
-    evidence:
-      - chisiec
+    evidence: [chisiec]
 
   - id: dependency-parsing
     domain: text-structure
@@ -125,8 +115,7 @@ capabilities:
     rationale: >-
       Usable toolchains exist, but robustness varies by period, genre, and
       annotation framework.
-    evidence:
-      - ud-kanbun
+    evidence: [ud-kanbun]
 
   - id: translation
     domain: language-understanding
@@ -137,9 +126,7 @@ capabilities:
       Suitable for first-pass translation and comparison, but polysemy,
       allusion, institutions, and ellipsis still prevent treating output as a
       definitive interpretation.
-    evidence:
-      - evahan-project
-      - wenyangpt
+    evidence: [evahan-project, wenyangpt, ctext-current]
 
   - id: lexical-grammar-explanation
     domain: language-understanding
@@ -149,9 +136,7 @@ capabilities:
     rationale: >-
       Models can generate useful contextual hypotheses; the main risk is
       presenting a plausible interpretation as if it were evidence-backed.
-    evidence:
-      - aclue
-      - wenyangpt
+    evidence: [aclue, wenyangpt]
 
   - id: reading-comprehension
     domain: language-understanding
@@ -161,21 +146,18 @@ capabilities:
     rationale: >-
       Dedicated benchmarks and domain models exist, but hallucination,
       leakage, and cross-document evidence chains remain concerns.
-    evidence:
-      - aclue
-      - wenyangpt
+    evidence: [aclue, wenyangpt]
 
   - id: grounded-retrieval-qa
     domain: research-assistance
     name_zh: 有出处约束的检索问答
     level: 3
-    confidence: low
+    confidence: medium
     rationale: >-
-      High practical value when every answer is linked back to a curated corpus,
-      edition, and passage; reliability depends more on provenance and retrieval
-      than on fluent generation.
-    evidence:
-      - chisiec
+      High practical value when answers are linked back to a curated corpus,
+      edition, and passage. Recent Classical Chinese retrieval work shows that
+      temporal validity can fail even when semantic relevance looks plausible.
+    evidence: [chunqiutr, ctext-library]
 
   - id: historical-information-extraction
     domain: research-assistance
@@ -185,8 +167,18 @@ capabilities:
     rationale: >-
       CHisIEC demonstrates substantial annotated resources across 13 dynasties
       for NER and relation extraction, enabling reproducible task evaluation.
-    evidence:
-      - chisiec
+    evidence: [chisiec]
+
+  - id: cross-document-synthesis
+    domain: research-assistance
+    name_zh: 跨文献事实综合
+    level: 2
+    confidence: medium
+    rationale: >-
+      Large corpora, text-reuse discovery, historical information extraction,
+      and time-aware retrieval can reduce search cost, but identity, chronology,
+      and conflicting records still require explicit resolution.
+    evidence: [ctext-parallels, chisiec, chunqiutr]
 
   - id: phonology-glyph-semantics
     domain: philology
@@ -197,29 +189,29 @@ capabilities:
       Multi-source retrieval and assisted hypothesis generation are possible,
       but historical phonology, glyph genealogy, and semantic change require
       source-specific scholarly evidence.
-    evidence:
-      - mcs-bench
+    evidence: [mcs-bench, ctext-library]
 
   - id: textual-criticism
     domain: philology
     name_zh: 版本校勘与异文判断
     level: 2
-    confidence: low
+    confidence: medium
     rationale: >-
-      Alignment and variant discovery can be automated usefully; choosing the
-      preferred reading still depends on textual genealogy and philological
-      argument.
-    evidence: []
+      Versioned transcription, page-image back-links, automated comparison, and
+      variant discovery are already useful; choosing a preferred reading still
+      depends on textual genealogy and philological argument.
+    evidence: [ctext-library]
 
   - id: exegetical-evidence-discovery
     domain: philology
     name_zh: 训诂证据发现
     level: 2
-    confidence: low
+    confidence: medium
     rationale: >-
-      Large-scale retrieval can surface candidate parallels, but chronology,
-      semantic drift, and circular argument must be checked by the researcher.
-    evidence: []
+      Large-scale parallel-passage and text-reuse discovery can surface
+      candidate examples, but chronology, semantic drift, and circular argument
+      must be checked by the researcher.
+    evidence: [ctext-parallels]
 
   - id: multimodal-classical-studies
     domain: multimodal
@@ -229,8 +221,7 @@ capabilities:
     rationale: >-
       MCS-Bench evaluates 37 MLLMs across 7 subdomains and 45 tasks; its best
       reported average score remains below 50, leaving substantial headroom.
-    evidence:
-      - mcs-bench
+    evidence: [mcs-bench]
 
   - id: autonomous-publishable-philology
     domain: philology
@@ -240,9 +231,7 @@ capabilities:
     rationale: >-
       Fluent generation does not satisfy provenance, falsifiability, textual
       genealogy, or scholarly-method requirements.
-    evidence:
-      - mcs-bench
-      - aclue
+    evidence: [mcs-bench, aclue, chunqiutr]
 
 sources:
   evahan-project:
@@ -273,12 +262,32 @@ sources:
   chisiec:
     title: CHisIEC — An Information Extraction Corpus for Ancient Chinese History
     url: https://aclanthology.org/2024.lrec-main.283/
-    type: peer_reviewed_benchmark
+    type: peer_reviewed_corpus
 
   mcs-bench:
     title: MCS-Bench — A Comprehensive Benchmark for Multimodal LLMs in Chinese Classical Studies
     url: https://aclanthology.org/2025.acl-long.515/
     type: peer_reviewed_benchmark
+
+  chunqiutr:
+    title: ChunQiuTR — Time-Keyed Temporal Retrieval in Classical Chinese Annals
+    url: https://aclanthology.org/2026.findings-acl.612/
+    type: peer_reviewed_retrieval_benchmark
+
+  ctext-library:
+    title: Chinese Text Project — A dynamic digital library of premodern Chinese
+    url: https://doi.org/10.1093/llc/fqz046
+    type: peer_reviewed_digital_library
+
+  ctext-current:
+    title: Chinese Text Project — current project notes and aligned AI translations
+    url: https://ctext.org/
+    type: sustained_real_workflow
+
+  ctext-parallels:
+    title: Unsupervised identification of text reuse in early Chinese literature
+    url: https://doi.org/10.1093/llc/fqx024
+    type: peer_reviewed_text_reuse_system
 
   guwenbert:
     title: GuwenBERT
