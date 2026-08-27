@@ -6,18 +6,22 @@ on:
       - progress.yaml
       - verification.yaml
       - experiments/**
+      - lab/**
       - scripts/validate_progress.py
       - scripts/validate_verification.py
       - scripts/validate_experiments.py
+      - scripts/validate_lab_cases.py
       - .github/workflows/validate-progress.yml
   pull_request:
     paths:
       - progress.yaml
       - verification.yaml
       - experiments/**
+      - lab/**
       - scripts/validate_progress.py
       - scripts/validate_verification.py
       - scripts/validate_experiments.py
+      - scripts/validate_lab_cases.py
       - .github/workflows/validate-progress.yml
 
 permissions:
@@ -46,3 +50,6 @@ jobs:
 
       - name: Validate experiment records
         run: python scripts/validate_experiments.py
+
+      - name: Validate field-lab cases
+        run: python scripts/validate_lab_cases.py
