@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Ancient Chinese AI capability and verification control room">
+  <title>古文 AI 控制室</title>
+  <link rel="stylesheet" href="./control-room.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">ANCIENT CHINESE AI / CONTROL ROOM</p>
+        <h1>古文 AI 控制室</h1>
+        <p class="lede">能力条是一回事，证据到底验到哪一步是另一回事。</p>
+      </div>
+      <div class="stamp" id="lastUpdated">loading…</div>
+    </header>
+
+    <section class="warning" id="reproductionBanner">
+      <strong>本站复现：读取中</strong>
+      <span>论文报告值不会自动变成本站实测值。</span>
+    </section>
+
+    <section class="summary-grid" id="summaryGrid" aria-label="summary"></section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">CAPABILITY</p>
+          <h2>任务能力</h2>
+        </div>
+        <div class="filters" id="domainFilters"></div>
+      </div>
+      <div id="capabilityGrid" class="capability-grid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">VERIFICATION</p>
+          <h2>“他们说的”检查到哪一步</h2>
+        </div>
+      </div>
+      <div class="legend">
+        <span><b>L0</b> 只听说</span>
+        <span><b>L1</b> 找到原话</span>
+        <span><b>L2</b> 检查公开物料</span>
+        <span><b>L3</b> 独立复现/真实长期工作流</span>
+        <span><b>L4</b> 本仓库亲自复现</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>来源</th><th>级别</th><th>论文</th><th>代码</th><th>数据</th><th>模型</th><th>复现</th>
+            </tr>
+          </thead>
+          <tbody id="sourceTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">CLAIMS</p>
+          <h2>具体数字：先写“报告值”</h2>
+        </div>
+      </div>
+      <div id="claimGrid" class="claim-grid"></div>
+    </section>
+
+    <section class="panel note-panel">
+      <h2>这个页面故意不做什么</h2>
+      <p>它不把 20 个不同任务平均成一个“古文 AI 已完成 73%”，也不因为来源来自 ACL / IJCAI 就显示绿色“真”。真正由本仓库跑出来的结果，必须在 <code>experiments/runs/</code> 留下版本、命令、指标和原始输出哈希。</p>
+      <nav class="links">
+        <a href="../README.md">README</a>
+        <a href="./verification-ledger.md">验证账本</a>
+        <a href="./torture-tests.md">拷打场</a>
+        <a href="../SIDE_QUESTS.md">Side Quests</a>
+        <a href="../verification.yaml">verification.yaml</a>
+        <a href="../progress.yaml">progress.yaml</a>
+      </nav>
+    </section>
+
+    <footer>
+      <span>如果这里哪天出现 L4，先看 run record，再庆祝。</span>
+      <span id="refLabel"></span>
+    </footer>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="./control-room.js"></script>
+</body>
+</html>

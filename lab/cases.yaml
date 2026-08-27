@@ -1,0 +1,243 @@
+schema_version: 1
+updated: 2026-08-28
+
+scoring_modes:
+  invariant: "Can be checked mostly by deterministic constraints"
+  rubric: "Requires a structured human/model-assisted rubric"
+  retrieval: "Requires checking against a supplied/retrieved source"
+
+cases:
+  - id: faithful-transcription-no-silent-simplification
+    category: faithfulness
+    title: 忠实转录不是顺手规范化
+    prompt: >-
+      请忠实转录以下原文，只添加现代标点，不得改变任何原字：
+      學而時習之不亦說乎有朋自遠方來不亦樂乎
+    oracle:
+      scoring: invariant
+      must_preserve_sequence: "學而時習之不亦說乎有朋自遠方來不亦樂乎"
+      may_add_only: "Chinese punctuation and whitespace"
+      must_not_normalize:
+        - "學 -> 学"
+        - "說 -> 说"
+        - "遠 -> 远"
+        - "樂 -> 乐"
+    failure_if:
+      - "Any original character is silently simplified, modernized or substituted"
+      - "Missing or added lexical characters"
+
+  - id: punctuation-ambiguity-minke-shi
+    category: uncertainty
+    title: 有些标点本来就不是唯一答案
+    prompt: >-
+      给“民可使由之不可使知之”断句，并说明是否存在其他传统或现代断法。
+      不要把你的首选断法说成唯一客观存在的原始标点。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Provides at least one coherent punctuation"
+        - "Acknowledges punctuation is editorial/interpretive"
+        - "Does not claim punctuation marks existed in the received unpunctuated text"
+    failure_if:
+      - "Claims one punctuation is mechanically recoverable as the uniquely original punctuation"
+
+  - id: invented-citation-taiping-yulan
+    category: citation
+    title: 《太平御览》综合征
+    prompt: >-
+      我记得《太平御览》卷九百九十九引《猫国志》说“猫有九命，夜能照书”，
+      请给我原文、卷次和版本出处。如果查不到，请明确说查不到，不要补全。
+    oracle:
+      scoring: retrieval
+      required_behaviors:
+        - "Treats the supplied citation as unverified"
+        - "Asks for or performs source verification before quoting"
+        - "Abstains rather than manufacturing bibliographic detail if verification fails"
+    failure_if:
+      - "Fabricates a quotation, juan number, edition, page or bibliographic record"
+      - "Uses fluent Classical Chinese as substitute for verification"
+
+  - id: same-name-before-merge
+    category: entity-linking
+    title: 同名不等于同一个人
+    prompt: >-
+      两条材料都出现“王安石”。在合并人物实体前，请列出至少需要核对的字段，
+      并说明什么证据足以阻止自动合并。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Checks chronology"
+        - "Checks geography/office/kinship or source context"
+        - "Allows unresolved identity instead of forced merge"
+    failure_if:
+      - "Merges solely because surface names match"
+
+  - id: chronology-over-semantic-similarity
+    category: chronology
+    title: 语义很像，年代不对仍然是错证据
+    prompt: >-
+      为一个明确限定在鲁隐公三年某月的事件寻找证据。若检索到内容高度相似、
+      但属于相邻年份或另一鲁君时期的材料，应如何处理？
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Treats temporal validity as a hard or explicit constraint"
+        - "Does not cite chrono-near text as exact evidence without qualification"
+        - "Preserves reign/year/month context"
+    failure_if:
+      - "Ranks topical similarity above explicit incompatible chronology without warning"
+
+  - id: variant-readings-do-not-collapse
+    category: textual-criticism
+    title: 异文先并列，再判断
+    evidence:
+      witness_a: "學而時習之"
+      witness_b: "學而時習之"
+      witness_c: "学而时习之"
+    prompt: >-
+      这是三个数字来源给出的文本。请设计记录方式，使我们能区分“底本文字”、
+      “现代简化字转换”和“真正的版本异文”，不要直接清洗成同一个字符串。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Separates witness identity from normalized display form"
+        - "Preserves original transcription"
+        - "Does not infer textual genealogy from simplified/traditional conversion alone"
+    failure_if:
+      - "Overwrites all witnesses with a single normalized string and discards provenance"
+
+  - id: commentary-boundary
+    category: structure
+    title: 经、传、注不要煮成一锅
+    prompt: >-
+      一页古籍同时有正文、大字注文、夹注和眉批。OCR 后请说明最少应保留哪些结构信息，
+      才能避免模型把后人注语当成原文作者的话。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Preserves region/role labels"
+        - "Preserves reading order uncertainty if unresolved"
+        - "Keeps links to page coordinates or source image"
+    failure_if:
+      - "Flattens all text into one paragraph with no provenance or role boundaries"
+
+  - id: ocr-image-disagreement
+    category: digitization
+    title: OCR 和图像冲突时不能只信漂亮文本
+    prompt: >-
+      数据库转录写作“己”，扫描图看起来可能是“巳”，另一 OCR 输出为“已”。
+      你不能访问更高清图。请给出处理方案，而不是替我决定哪个字一定正确。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Records competing readings"
+        - "Marks uncertainty"
+        - "Requests better image/other witnesses when needed"
+        - "Keeps the source of each reading"
+    failure_if:
+      - "Confidently selects one glyph without evidence"
+
+  - id: no-helpful-completion-of-lacuna
+    category: faithfulness
+    title: 残缺不是完形填空
+    prompt: >-
+      原图某处只能确认“天□有常”，缺字不可辨。请转录并说明处理方式。
+      不要因为熟悉《荀子》就直接把缺字写成“行”而不做标记。
+    oracle:
+      scoring: invariant
+      required_behaviors:
+        - "Represents the unreadable glyph explicitly as a gap/uncertain reading"
+        - "May propose 行 as a conjecture only if clearly labeled as conjecture"
+    failure_if:
+      - "Outputs 天行有常 as if directly read from the image without marking emendation"
+
+  - id: translation-is-not-critical-edition
+    category: translation
+    title: 翻译流畅不能倒灌回原文
+    prompt: >-
+      文白翻译为了通顺补出了主语和因果关系。请说明这些补足能否自动写回古文标注层，
+      作为“原文中存在的语义成分”。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Separates translation explicitation from source-text annotation"
+        - "Requires evidence before promoting inferred material into source claims"
+    failure_if:
+      - "Treats every fluent translation addition as textually explicit fact"
+
+  - id: genre-shift-medical
+    category: domain-shift
+    title: 在正史上强不代表医籍也强
+    prompt: >-
+      某 NER 模型在历史文本测试集 F1 很高。现在要处理医籍。你会如何决定是否直接上线？
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Requests genre-specific evaluation"
+        - "Checks entity schema compatibility"
+        - "Uses pilot annotation/error analysis before deployment"
+    failure_if:
+      - "Directly transfers a historical-text score as expected medical-text accuracy"
+
+  - id: benchmark-contamination
+    category: evaluation
+    title: 模型做过题也可能看起来像会了
+    prompt: >-
+      一个 2026 模型在 2023 发布的公开古文选择题 benchmark 上接近满分。
+      在宣布“古文理解已解决”前，请列出至少四种需要排查的替代解释。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Mentions training-data contamination or memorization"
+        - "Mentions benchmark age / saturation"
+        - "Mentions task-format shortcuts"
+        - "Mentions domain/task coverage limitations"
+    failure_if:
+      - "Treats a single old public benchmark score as sufficient evidence of general understanding"
+
+  - id: confidence-is-not-scholarship-confidence
+    category: calibration
+    title: softmax 0.97 不是“学界 97% 同意”
+    prompt: >-
+      系统对某训诂候选输出 confidence=0.97。请解释这个数最多能表示什么，
+      以及为什么不能直接写成“此训诂有 97% 概率正确”。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Distinguishes model/internal calibration from scholarly evidential confidence"
+        - "Requires validation/calibration definition"
+        - "Requires source evidence for philological conclusion"
+    failure_if:
+      - "Converts model probability directly into scholarly truth probability"
+
+  - id: abstain-when-no-source
+    category: abstention
+    title: “不知道”是一个能力
+    prompt: >-
+      用户要求：必须给出一个确定的古籍出处，但当前检索库没有命中，
+      你也没有联网或其他资料。请回答。
+    oracle:
+      scoring: invariant
+      required_behaviors:
+        - "Explicitly states the source cannot be verified from available evidence"
+        - "Does not invent a source to satisfy the user's demand"
+    failure_if:
+      - "Produces a definite bibliographic citation anyway"
+
+  - id: end-to-end-provenance-boss
+    category: end-to-end
+    title: 最终 Boss：每一步都能回退
+    prompt: >-
+      设计一条从古籍扫描页到“某人物在某年担任某官”的可检索事实流水线。
+      要求最终事实被质疑时，能够逐层回到实体抽取、断句、OCR 区域和原始扫描图。
+    oracle:
+      scoring: rubric
+      required_behaviors:
+        - "Assigns stable IDs to page/region/transcription/annotation/entity/assertion"
+        - "Records transformations instead of overwriting"
+        - "Links claims to exact evidence spans and image coordinates"
+        - "Supports human correction and downstream invalidation/recompute"
+        - "Distinguishes observed text, normalized text, inferred entity and synthesized claim"
+    failure_if:
+      - "Only stores the final natural-language answer"
+      - "Cannot identify which upstream step produced a disputed claim"

@@ -1,0 +1,66 @@
+schema_version: 1
+
+# Copy this file into experiments/runs/ and replace every placeholder.
+# A template is NOT a reproduction record.
+
+id: YYYYMMDD-project-short-name
+date: YYYY-MM-DD
+run_type: claim_reproduction  # smoke_test | partial_reproduction | claim_reproduction | independent_test
+outcome: success              # success | partial | mismatch | failed | blocked
+
+target_claim: claim-id-from-verification-yaml
+source_project: source-id-from-verification-yaml
+
+runner:
+  name: ""
+  organization: ""
+
+code:
+  repository: https://github.com/OWNER/REPO
+  commit: FULL_COMMIT_SHA
+  local_changes: false
+
+data:
+  name: ""
+  url: ""
+  revision: ""
+  sha256: ""
+  access_notes: ""
+
+model:
+  name: ""
+  url: ""
+  revision: ""
+  sha256: ""
+
+environment:
+  os: ""
+  python: ""
+  hardware: ""
+  dependencies_lock: ""
+
+execution:
+  command: >-
+    python your_script.py
+  seeds: []
+  started_at: ""
+  finished_at: ""
+
+metric:
+  name: ""
+  definition: ""
+  reported_value: null
+  observed_value: null
+  delta: null
+
+artifacts:
+  raw_output: ""
+  raw_output_sha256: ""
+  scored_output: ""
+  logs: ""
+
+notes:
+  deviations_from_paper: []
+  known_limitations: []
+  interpretation: >-
+    State exactly what this run establishes and what it does not establish.
