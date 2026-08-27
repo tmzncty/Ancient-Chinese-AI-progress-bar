@@ -29,7 +29,7 @@
 
 **本仓库刻意不计算总进度。** OCR、断句、训诂、命名实体识别、文白翻译、版本校勘和文学阐释并不是同一道题，把它们平均成“古文 AI 已完成 73%”只会制造虚假的精确感。
 
-机器可读版本见 [`progress.yaml`](./progress.yaml)。
+机器可读版本见 [`progress.yaml`](./progress.yaml)，本轮校准所用主要证据见 [`docs/evidence-2026.md`](./docs/evidence-2026.md)。
 
 ---
 
@@ -173,7 +173,7 @@ EvaHan 的任务变化很有代表性：
 - **CHisIEC** — 古代中国历史信息抽取语料，包含 14,194 个实体、8,609 个关系，材料跨 13 个朝代。  
   https://aclanthology.org/2024.lrec-main.283/
 - **MCS-Bench** — 面向中国古典学的多模态评测，覆盖古文、书法、绘画、甲骨、印章、文物、插图。  
-  https://aclanthology.org/2025.acl-long.1063/ （如 ACL 编号调整，以论文题名检索为准）
+  https://aclanthology.org/2025.acl-long.515/
 
 ### 模型与工具
 
