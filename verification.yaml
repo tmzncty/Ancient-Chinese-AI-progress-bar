@@ -77,6 +77,7 @@ sources:
     checked:
       - "Public project repository exists"
       - "Project spans multiple annual Ancient Chinese shared tasks"
+      - "Repository currently contains annual archives/materials and 2026 evaluation scripts"
     not_checked:
       - "Every annual dataset license and completeness"
       - "Every baseline result"
@@ -94,6 +95,7 @@ sources:
     checked:
       - "Public shared-task materials exist"
       - "Task design separates printed OCR, layout analysis and handwriting OCR"
+      - "Repository root contains dataset-description documents plus task_a_c_eva.py and task_b_eva.py evaluation scripts"
     not_checked:
       - "Final leaderboard results as a reproduced experiment"
 
@@ -109,6 +111,7 @@ sources:
     reproduction: not_attempted
     checked:
       - "Public benchmark repository exists"
+      - "Repository root contains data/, script/ and src/ together with separate data licensing"
       - "ACLUE task is also integrated in lm-evaluation-harness"
       - "15-task framing is visible in public materials"
     not_checked:
@@ -127,7 +130,7 @@ sources:
     reproduction: not_attempted
     checked:
       - "Peer-reviewed paper states 14,194 entities and 8,609 relations"
-      - "Paper points to a public GitHub repository for dataset and code"
+      - "Public GitHub repository currently contains both code/ and data/ directories"
     not_checked:
       - "Independent recount of every annotation"
       - "Baseline reproduction"
@@ -146,7 +149,7 @@ sources:
     checked:
       - "ACL paper reports 7 subdomains, 45 tasks and evaluation of 37 MLLMs"
       - "ACL paper reports best average score below 50"
-      - "Public repository currently exposes metric code and an institutional application form"
+      - "Public repository root contains calculate_metrics.py and an institutional application form, not an unrestricted benchmark data directory"
       - "Dataset access requires application, institutional signature/stamp and manual review"
     not_checked:
       - "Raw benchmark examples beyond public samples"
@@ -169,7 +172,7 @@ sources:
     reproduction: not_attempted
     checked:
       - "ACL Findings paper exists"
-      - "Public repository contains training/evaluation scripts"
+      - "Repository root directly contains dataset/, src/, multiple evaluation scripts, main.py and requirements.txt"
       - "Repository documents release of derived benchmark artifacts"
       - "Repository documents source revision IDs and scripts for re-downloading Wikisource text"
     not_checked:
@@ -182,38 +185,50 @@ sources:
     artifacts: https://github.com/bytedance/AncientDoc
     level: L2
     paper: public
-    code: public
+    code: unavailable
     data: public
-    model: not_applicable
+    model: unavailable
     evaluation: author_reported
     reproduction: not_attempted
     checked:
       - "ACL Findings paper exists"
-      - "Paper states five tasks, 14 document types, 100+ books and about 3,000 pages"
-      - "Public repository exists and describes dataset/code resources"
+      - "Paper/README state five tasks, 14 document types, 100+ books and about 3,000 pages"
+      - "Repository is currently a project-page repository (README, HTML/CSS/JS/assets), not a visible experiment-code tree"
+      - "README links the dataset to Hugging Face and states CC0 licensing"
+      - "README's Models badge still points to literal placeholder 'link_to_models'; the 'Weights & Logs' link points to the arXiv paper rather than released weights/logs"
     not_checked:
       - "Baseline model reruns"
       - "Independent verification of every dataset count"
       - "LLM-as-judge/human-correlation experiments"
+      - "Whether complete evaluation/training code is published in a separate repository not linked from the inspected project repository"
+    warning: >-
+      Artifact presence must be described literally. The inspected AncientDoc
+      GitHub repository exposes a project site and dataset link, but no visible
+      benchmark execution code or released baseline weights/logs were confirmed
+      there during the 2026-08 audit.
 
   guwenbert:
     title: GuwenBERT
     primary: https://github.com/Ethan-yt/guwenbert
     level: L2
     paper: unavailable
-    code: public
+    code: unavailable
     data: partial
     model: public
     evaluation: author_reported
     reproduction: not_attempted
     checked:
-      - "Public repository and downloadable model weights exist"
+      - "Public project repository exists and README links downloadable model weights"
+      - "Repository root currently contains README/LICENSE/assets but no visible training or evaluation code tree"
       - "README reports 15,694 books / 1.7B characters for continued pretraining"
       - "README explicitly warns experimental results are dataset/hyperparameter specific"
     not_checked:
       - "Training-corpus reconstruction"
       - "Reported 6.3% NER improvement"
       - "Competition placement from primary leaderboard records"
+    warning: >-
+      Public weights are not the same thing as public training/evaluation code.
+      The 2026-08 audit therefore records model availability separately from code.
 
   wenyangpt:
     title: WenyanGPT / WenyanBENCH
@@ -244,20 +259,22 @@ sources:
     primary: https://github.com/Xunzi-LLM-of-Chinese-classics/XunziALLM
     level: L2
     paper: partial
-    code: public
-    data: unknown
+    code: partial
+    data: partial
     model: public
     evaluation: anecdotal_or_author_reported
     reproduction: not_attempted
     checked:
       - "Public repository lists multiple released model families"
+      - "Repository currently contains examples/, requirements.txt, a download helper, web code, tutorials and sample data"
       - "Project site and repository describe Ancient-Chinese processing capabilities"
     not_checked:
       - "A single comprehensive public benchmark supporting all capability claims"
       - "Full training data and exact training process for all released variants"
     warning: >-
       Capability prose in a project README is product/project description, not
-      by itself a benchmark result.
+      by itself a benchmark result. Public inference/example code and sample data
+      also do not imply that full training code/data are available.
 
   ud-kanbun:
     title: UD-Kanbun
@@ -270,7 +287,7 @@ sources:
     evaluation: tool_available
     reproduction: not_attempted
     checked:
-      - "Public source and pip-installable usage are documented"
+      - "Public source repository contains setup.py, package source, notebook and documented usage"
       - "Tokenizer/POS/dependency parsing pipeline is concretely specified"
     not_checked:
       - "Cross-genre accuracy benchmark in this repository"
@@ -389,7 +406,7 @@ claims:
     source: ancientdoc
     value: "5 tasks; 14 document types; 100+ books; about 3,000 pages"
     unit: dataset_scope
-    status: paper_and_repository_description_verified
+    status: primary_source_scope_report_verified_artifact_code_not_confirmed
     reproduced_here: false
 
 # L4 entries must point to a committed experiment run under experiments/runs/.
