@@ -1,0 +1,310 @@
+schema_version: 1
+updated: 2026-08-28
+
+scale:
+  0: "No repeatable approach yet"
+  1: "Demo / anecdotal capability; generalization unknown"
+  2: "Public data, models, or benchmarks exist; reliability still limited"
+  3: "Useful on bounded material with human verification"
+  4: "Routine tool in a clearly bounded workflow"
+  5: "Highly mature, automatable, and failure boundaries are well understood"
+
+policy:
+  aggregate_score: false
+  reason: >-
+    OCR, punctuation, translation, information extraction, textual criticism,
+    and literary interpretation are different tasks. Averaging them into a
+    single Ancient-Chinese-AI percentage creates false precision.
+  minimum_update_evidence:
+    - shared_task
+    - peer_reviewed_benchmark
+    - reproducible_experiment
+    - sustained_real_workflow
+
+capabilities:
+  - id: layout-analysis
+    domain: digitization
+    name_zh: 古籍版面分析
+    level: 3
+    confidence: medium
+    rationale: >-
+      Current multimodal/OCR systems can identify common page elements, while
+      unusual layouts, interlinear notes, damage, and page-specific structures
+      still require review.
+    evidence: [evahan-2026]
+
+  - id: printed-ocr
+    domain: digitization
+    name_zh: 刻本文字 OCR
+    level: 3
+    confidence: medium
+    rationale: >-
+      Practical for first-pass transcription on bounded collections, but rare
+      characters, variant forms, stains, missing glyphs, and reading order
+      remain material error sources.
+    evidence: [evahan-2026, mcs-bench, ctext-library]
+
+  - id: handwritten-ocr
+    domain: digitization
+    name_zh: 手稿/抄本 OCR
+    level: 2
+    confidence: medium
+    rationale: >-
+      Dedicated evaluation now exists, but cursive connections, omissions,
+      corrections, and individual handwriting create a much harder problem
+      than printed text.
+    evidence: [evahan-2026]
+
+  - id: glyph-normalization
+    domain: digitization
+    name_zh: 异体字与字形归一
+    level: 2
+    confidence: medium
+    rationale: >-
+      Candidate normalization is useful, but faithful transcription and
+      editorial normalization must remain separate operations. CText also
+      demonstrates dedicated handling for rare and non-Unicode glyphs.
+    evidence: [ctext-library]
+
+  - id: word-segmentation-pos
+    domain: text-structure
+    name_zh: 分词/词性标注
+    level: 3
+    confidence: medium
+    rationale: >-
+      Long-running research and shared evaluation make this a usable component,
+      though word boundaries in Classical Chinese are partly analytical.
+    evidence: [evahan-project]
+
+  - id: punctuation
+    domain: text-structure
+    name_zh: 断句与标点
+    level: 3
+    confidence: high
+    rationale: >-
+      EvaHan 2024 reports strong results, but unseen text is harder and LLM
+      systems may modify original characters, so post-processing and review
+      remain necessary.
+    evidence: [evahan-2024-overview]
+
+  - id: ner
+    domain: text-structure
+    name_zh: 命名实体识别
+    level: 3
+    confidence: high
+    rationale: >-
+      EvaHan 2025 provides a rigorous multi-domain benchmark with strong F1
+      scores, while genre and entity type still materially affect performance.
+    evidence: [evahan-2025-overview, chisiec, guwenbert]
+
+  - id: relation-extraction
+    domain: text-structure
+    name_zh: 关系抽取
+    level: 2
+    confidence: medium
+    rationale: >-
+      Specialized historical corpora and experiments exist, but implicit
+      relations, schema dependence, and cross-text ambiguity remain difficult.
+    evidence: [chisiec]
+
+  - id: dependency-parsing
+    domain: text-structure
+    name_zh: 句法/依存分析
+    level: 2
+    confidence: medium
+    rationale: >-
+      Usable toolchains exist, but robustness varies by period, genre, and
+      annotation framework.
+    evidence: [ud-kanbun]
+
+  - id: translation
+    domain: language-understanding
+    name_zh: 文白翻译
+    level: 3
+    confidence: medium
+    rationale: >-
+      Suitable for first-pass translation and comparison, but polysemy,
+      allusion, institutions, and ellipsis still prevent treating output as a
+      definitive interpretation.
+    evidence: [evahan-project, wenyangpt, ctext-current]
+
+  - id: lexical-grammar-explanation
+    domain: language-understanding
+    name_zh: 字词义项与语法解释
+    level: 3
+    confidence: medium
+    rationale: >-
+      Models can generate useful contextual hypotheses; the main risk is
+      presenting a plausible interpretation as if it were evidence-backed.
+    evidence: [aclue, wenyangpt]
+
+  - id: reading-comprehension
+    domain: language-understanding
+    name_zh: 古文问答/阅读理解
+    level: 3
+    confidence: medium
+    rationale: >-
+      Dedicated benchmarks and domain models exist, but hallucination,
+      leakage, and cross-document evidence chains remain concerns.
+    evidence: [aclue, wenyangpt]
+
+  - id: grounded-retrieval-qa
+    domain: research-assistance
+    name_zh: 有出处约束的检索问答
+    level: 3
+    confidence: medium
+    rationale: >-
+      High practical value when answers are linked back to a curated corpus,
+      edition, and passage. Recent Classical Chinese retrieval work shows that
+      temporal validity can fail even when semantic relevance looks plausible.
+    evidence: [chunqiutr, ctext-library]
+
+  - id: historical-information-extraction
+    domain: research-assistance
+    name_zh: 历史信息抽取
+    level: 3
+    confidence: high
+    rationale: >-
+      CHisIEC demonstrates substantial annotated resources across 13 dynasties
+      for NER and relation extraction, enabling reproducible task evaluation.
+    evidence: [chisiec]
+
+  - id: cross-document-synthesis
+    domain: research-assistance
+    name_zh: 跨文献事实综合
+    level: 2
+    confidence: medium
+    rationale: >-
+      Large corpora, text-reuse discovery, historical information extraction,
+      and time-aware retrieval can reduce search cost, but identity, chronology,
+      and conflicting records still require explicit resolution.
+    evidence: [ctext-parallels, chisiec, chunqiutr]
+
+  - id: phonology-glyph-semantics
+    domain: philology
+    name_zh: 音形义关联分析
+    level: 2
+    confidence: low
+    rationale: >-
+      Multi-source retrieval and assisted hypothesis generation are possible,
+      but historical phonology, glyph genealogy, and semantic change require
+      source-specific scholarly evidence.
+    evidence: [mcs-bench, ctext-library]
+
+  - id: textual-criticism
+    domain: philology
+    name_zh: 版本校勘与异文判断
+    level: 2
+    confidence: medium
+    rationale: >-
+      Versioned transcription, page-image back-links, automated comparison, and
+      variant discovery are already useful; choosing a preferred reading still
+      depends on textual genealogy and philological argument.
+    evidence: [ctext-library]
+
+  - id: exegetical-evidence-discovery
+    domain: philology
+    name_zh: 训诂证据发现
+    level: 2
+    confidence: medium
+    rationale: >-
+      Large-scale parallel-passage and text-reuse discovery can surface
+      candidate examples, but chronology, semantic drift, and circular argument
+      must be checked by the researcher.
+    evidence: [ctext-parallels]
+
+  - id: multimodal-classical-studies
+    domain: multimodal
+    name_zh: 多模态中国古典学
+    level: 2
+    confidence: high
+    rationale: >-
+      MCS-Bench evaluates 37 MLLMs across 7 subdomains and 45 tasks; its best
+      reported average score remains below 50, leaving substantial headroom.
+    evidence: [mcs-bench]
+
+  - id: autonomous-publishable-philology
+    domain: philology
+    name_zh: 自动形成可发表的文献学结论
+    level: 1
+    confidence: medium
+    rationale: >-
+      Fluent generation does not satisfy provenance, falsifiability, textual
+      genealogy, or scholarly-method requirements.
+    evidence: [mcs-bench, aclue, chunqiutr]
+
+sources:
+  evahan-project:
+    title: EvaHan — Evaluation of NLP tools for the Ancient Chinese language
+    url: https://github.com/GoThereGit/EvaHan
+    type: shared_task
+
+  evahan-2026:
+    title: EvaHan 2026 — multimodal OCR for Ancient Chinese
+    url: https://github.com/GoThereGit/EvaHan
+    type: shared_task
+
+  evahan-2024-overview:
+    title: Overview of EvaHan2024 — Sentence Segmentation and Punctuation
+    url: https://aclanthology.org/2024.lt4hala-1.27/
+    type: peer_reviewed_benchmark
+
+  evahan-2025-overview:
+    title: Overview of EvaHan2025 — Ancient Chinese Named Entity Recognition
+    url: https://aclanthology.org/2025.alp-1.19/
+    type: peer_reviewed_benchmark
+
+  aclue:
+    title: Can Large Language Model Comprehend Ancient Chinese? A Preliminary Test on ACLUE
+    url: https://aclanthology.org/2023.alp-1.9/
+    type: peer_reviewed_benchmark
+
+  chisiec:
+    title: CHisIEC — An Information Extraction Corpus for Ancient Chinese History
+    url: https://aclanthology.org/2024.lrec-main.283/
+    type: peer_reviewed_corpus
+
+  mcs-bench:
+    title: MCS-Bench — A Comprehensive Benchmark for Multimodal LLMs in Chinese Classical Studies
+    url: https://aclanthology.org/2025.acl-long.515/
+    type: peer_reviewed_benchmark
+
+  chunqiutr:
+    title: ChunQiuTR — Time-Keyed Temporal Retrieval in Classical Chinese Annals
+    url: https://aclanthology.org/2026.findings-acl.612/
+    type: peer_reviewed_retrieval_benchmark
+
+  ctext-library:
+    title: Chinese Text Project — A dynamic digital library of premodern Chinese
+    url: https://doi.org/10.1093/llc/fqz046
+    type: peer_reviewed_digital_library
+
+  ctext-current:
+    title: Chinese Text Project — current project notes and aligned AI translations
+    url: https://ctext.org/
+    type: sustained_real_workflow
+
+  ctext-parallels:
+    title: Unsupervised identification of text reuse in early Chinese literature
+    url: https://doi.org/10.1093/llc/fqx024
+    type: peer_reviewed_text_reuse_system
+
+  guwenbert:
+    title: GuwenBERT
+    url: https://github.com/Ethan-yt/guwenbert
+    type: model
+
+  wenyangpt:
+    title: WenyanGPT and WenyanBENCH
+    url: https://www.ijcai.org/proceedings/2025/927
+    type: peer_reviewed_model_and_benchmark
+
+  xunzi:
+    title: XunziALLM
+    url: https://github.com/Xunzi-LLM-of-Chinese-classics/XunziALLM
+    type: model
+
+  ud-kanbun:
+    title: UD-Kanbun
+    url: https://github.com/KoichiYasuoka/UD-Kanbun
+    type: tool
