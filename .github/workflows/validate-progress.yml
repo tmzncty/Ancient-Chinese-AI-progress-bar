@@ -1,15 +1,23 @@
-name: validate progress data
+name: validate project data
 
 on:
   push:
     paths:
       - progress.yaml
+      - verification.yaml
+      - experiments/**
       - scripts/validate_progress.py
+      - scripts/validate_verification.py
+      - scripts/validate_experiments.py
       - .github/workflows/validate-progress.yml
   pull_request:
     paths:
       - progress.yaml
+      - verification.yaml
+      - experiments/**
       - scripts/validate_progress.py
+      - scripts/validate_verification.py
+      - scripts/validate_experiments.py
       - .github/workflows/validate-progress.yml
 
 permissions:
@@ -32,3 +40,9 @@ jobs:
 
       - name: Validate progress.yaml
         run: python scripts/validate_progress.py
+
+      - name: Validate verification.yaml
+        run: python scripts/validate_verification.py
+
+      - name: Validate experiment records
+        run: python scripts/validate_experiments.py
